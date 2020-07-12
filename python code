@@ -1,23 +1,23 @@
-def atPeak(userInput, base, sets):
+def atPeak(userInput, base, sets): #This code tests if the current number is inbetween the current digits.  Ex: in base 2, 257 would be inbetween 256 and 512
   return bool(userInput >= base**sets and userInput < base**(sets + 1))
    
-def getReps(userInput, base, sets):
-  if(atPeak(userInput, base, sets)):
-    return sets
-  return getReps(userInput, base, sets + 1)
+def getReps(userInput, base, sets): #This function gets the number of digits in the new base using the atPeak function in increments of sets Ex: for 5 in base 2 it would check 1, 2, 4, 6
+  if(atPeak(userInput, base, sets)): #is the current number between two sets?
+    return sets #send the set
+  return getReps(userInput, base, sets + 1) #Call function again if it is not
 
 def convertToBase(userInput, base, sets):
-  baseSet = int(base ** sets)
-  remainder = int(userInput % baseSet)
-  result= int((userInput - remainder) / baseSet)
-  if(sets <= 0):
-    return str(result)
-  if(atPeak(userInput, base, sets)):
+  baseSet = int(base ** sets) #gets the current increment Ex: in base 10 it would be something like 10, 100, or 1000
+  remainder = int(userInput % baseSet) #gets the leftover from the division to get the new digit Ex: 156 % 100 would be 56, the remainder and we want to remove it to get the digit 1 in 100
+  result= int((userInput - remainder) / baseSet) #gets the result by subtracting for ex: 156 by 56, dividing 100 by 100 to get 1 in the hundreds digit
+  if(sets <= 0): #if the set is = or less than 0, then finish the conversion
+    return str(result) 
+  if(atPeak(userInput, base, sets)): #if the set is validly in between the two current numbers, then keep the digit(for ex: 1), and continue using the remainder but going down a set
     return str(result) + " " + str(convertToBase(userInput - (result * baseSet), base, sets - 1))
-  return str("0") + " " + str(convertToBase(userInput, base, sets - 1))
+  return str("0") + " " + str(convertToBase(userInput, base, sets - 1)) #if the number is not between the two current increments, use a 0 for the digit and keep moving down
 
-def baseConvert(userInput, base):
+def baseConvert(userInput, base): #simplifies the code and user input needed by holding it in one function
   sets = 0
   return convertToBase(userInput, base, getReps(userInput, base, sets))
 
-print(baseConvert(20, 2))
+print(baseConvert(20, 2)) #this would give a base convert of 20 in base 10 over to base 2
