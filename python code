@@ -15,6 +15,7 @@ def convertToBase(userInput, base, sets):
   if(atPeak(userInput, base, sets)): #if the set is validly in between the two current numbers, then keep the digit(for ex: 1), and continue using the remainder but going down a set
     return str(result) + " " + str(convertToBase(userInput - (result * baseSet), base, sets - 1))
   return str("0") + " " + str(convertToBase(userInput, base, sets - 1)) #if the number is not between the two current increments, use a 0 for the digit and keep moving down
+  #for example: 100022 would go in the pattern for each digit as 1 by using 100000, but 00022 is smaller than the next increment of 100000 <-> 10000 so use a 0 and keep going down 
 
 def baseConvert(userInput, base): #simplifies the code and user input needed by holding it in one function
   sets = 0
