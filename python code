@@ -17,8 +17,23 @@ def convertToBase(userInput, base, sets):
   return str("0") + " " + str(convertToBase(userInput, base, sets - 1)) #if the number is not between the two current increments, use a 0 for the digit and keep moving down
   #for example: 100022 would go in the pattern for each digit as 1 by using 100000, but 00022 is smaller than the next increment of 100000 <-> 10000 so use a 0 and keep going down 
 
-def baseConvert(userInput, base): #simplifies the code and user input needed by holding it in one function
+def baseTenConvert(userInput, base):
   sets = 0
-  return convertToBase(userInput, base, getReps(userInput, base, sets))
+  a = convertToBase(userInput, base, getReps(userInput, base, sets)).split(" ")
+  return a
 
-print(baseConvert(20, 2)) #this would give a base convert of 20 in base 10 over to base 2
+def printToString(inpu):
+  for x in inpu:
+    if len(x) > 1:
+      return " ".join(inpu)
+  return "".join(inpu)
+
+def AllConvert(userInput, base, targetBase):
+  i = 0
+  for x in range(len(userInput)):
+    i += int(userInput[x]) * (base ** ((len(userInput) - 1) - x))
+  return baseTenConvert(i, targetBase)
+
+print(printToString(baseTenConvert(34, 2)))
+print(printToString(AllConvert(baseTenConvert(34, 2), 19, 12)))
+
