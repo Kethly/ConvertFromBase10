@@ -1,0 +1,23 @@
+def atPeak(userInput, base, sets):
+  return bool(userInput >= base**sets and userInput < base**(sets + 1))
+   
+def getReps(userInput, base, sets):
+  if(atPeak(userInput, base, sets)):
+    return sets
+  return getReps(userInput, base, sets + 1)
+
+def convertToBase(userInput, base, sets):
+  baseSet = int(base ** sets)
+  remainder = int(userInput % baseSet)
+  result= int((userInput - remainder) / baseSet)
+  if(sets <= 0):
+    return str(result)
+  if(atPeak(userInput, base, sets)):
+    return str(result) + " " + str(convertToBase(userInput - (result * baseSet), base, sets - 1))
+  return str("0") + " " + str(convertToBase(userInput, base, sets - 1))
+
+def baseConvert(userInput, base):
+  sets = 0
+  return convertToBase(userInput, base, getReps(userInput, base, sets))
+
+print(baseConvert(20, 2))
